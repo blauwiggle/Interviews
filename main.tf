@@ -28,17 +28,11 @@ resource "aws_lambda_function" "test_lambda" {
   filename      = "lambda_function_payload.zip"
   function_name = "lambda_function_name"
   role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "index.test"
+  handler       = "test"
 
   source_code_hash = data.archive_file.lambda.output_base64sha256
 
-  runtime = "nodejs18.x"
-
-  environment {
-    variables = {
-      foo = "bar"
-    }
-  }
+  runtime = "nodejs"
 }
 
 resource "aws_dynamodb_table" "example" {
@@ -52,12 +46,23 @@ resource "aws_dynamodb_table" "example" {
     name = "TestTableHashKey"
     type = "S"
   }
+}
 
-  replica {
-    region_name = "us-east-2"
-  }
+resource "aws_iam_policy" "dynamodb_policy" {
+  name = "DynamoDBLambdaPolicy"
 
-  replica {
-    region_name = "us-west-2"
-  }
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:*"
+        ]
+        Resource = [
+          "*"
+        ]
+      }
+    ]
+  })
 }
