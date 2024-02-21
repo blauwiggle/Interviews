@@ -35,8 +35,8 @@ resource "aws_lambda_function" "test_lambda" {
   runtime = "nodejs"
 }
 
-resource "aws_dynamodb_table" "example" {
-  name             = "example"
+resource "aws_dynamodb_table" "users" {
+  name             = "users"
   hash_key         = "TestTableHashKey"
   billing_mode     = "PAY_PER_REQUEST"
   stream_enabled   = true

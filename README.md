@@ -13,13 +13,21 @@ Note: The backend for terraform can be freely choosen.
 
 ## Lambda 
 
-Please write a lambda function that reads data from the given dynamodb table (TODO create skeleton for that) and saves the ids
-only for entries that have both SSO and 2FA.
+Please write a lambda function that reads data from the 'users' dynamodb table and prints/returns the ids
+only for entries that have both SSO and 2FA. To test the function you will need to populate the table with data. The section below shows how such a table should look like with regards to attributes.
 
-# Dynamodb (would provide)
+## Dynamodb table structure
 
 | Id  | Name  | Email  | SSO  | 2FA  |
 |---|---|---|---|---|
-| 12312313  | Asf  | ajfsjf@gmail.com  | N | Y  |
-| 12093103901 | Asdf | eifj@gmail.com   | Y | N  |
-| 12301301  | Asdfsff  | weiofajwof@gmail.com  | N  | N  |
+| 12312313  | Mark Mustermann  | test2mark@gmail.com  | N | Y  |
+| 12093103901 | Test User | test@gmail.com   | Y | N  |
+| 12301301  | Random UserName  | randomusername@gmail.com  | N  | N  |
+
+### Attribute types
+
+* ID (N)
+* Name (S)
+* Email (S)
+* SSO (BOOL)
+* 2FA (BOOL)
