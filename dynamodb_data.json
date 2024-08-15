@@ -1,0 +1,107 @@
+[
+    {
+        "Id": {"N": "101"},
+        "Name": {"S": "Alice Smith"},
+        "Email": {"S": "alice@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "1"}
+    },
+    {
+        "Id": {"N": "102"},
+        "Name": {"S": "Bob Johnson"},
+        "Email": {"S": "bob@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "0"}
+    },
+    {
+        "Id": {"N": "103"},
+        "Name": {"S": "Charlie Brown"},
+        "Email": {"S": "charlie@example.com"},
+        "SSO": {"N": "0"},
+        "2FA": {"N": "1"}
+    },
+    {
+        "Id": {"N": "104"},
+        "Name": {"S": "Diana Prince"},
+        "Email": {"S": "diana@example.com"},
+        "SSO": {"N": "0"},
+        "2FA": {"N": "0"}
+    },
+    {
+        "Id": {"N": "105"},
+        "Name": {"S": "Ethan Hunt"},
+        "Email": {"S": "ethan@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "1"}
+    },
+    {
+        "Id": {"N": "106"},
+        "Name": {"S": "Fiona Gallagher"},
+        "Email": {"S": "fiona@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "0"}
+    },
+    {
+        "Id": {"N": "107"},
+        "Name": {"S": "George Washington"},
+        "Email": {"S": "george@example.com"},
+        "SSO": {"N": "0"},
+        "2FA": {"N": "1"}
+    },
+    {
+        "Id": {"N": "108"},
+        "Name": {"S": "Hannah Montana"},
+        "Email": {"S": "hannah@example.com"},
+        "SSO": {"N": "0"},
+        "2FA": {"N": "0"}
+    },
+    {
+        "Id": {"N": "109"},
+        "Name": {"S": "Ian Malcolm"},
+        "Email": {"S": "ian@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "1"}
+    },
+    {
+        "Id": {"N": "110"},
+        "Name": {"S": "Jessica Jones"},
+        "Email": {"S": "jessica@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "0"}
+    },
+    {
+        "Id": {"N": "111"},
+        "Name": {"S": "Kyle Reese"},
+        "Email": {"S": "kyle@example.com"},
+        "SSO": {"N": "0"},
+        "2FA": {"N": "1"}
+    },
+    {
+        "Id": {"N": "112"},
+        "Name": {"S": "Lara Croft"},
+        "Email": {"S": "lara@example.com"},
+        "SSO": {"N": "0"},
+        "2FA": {"N": "0"}
+    },
+    {
+        "Id": {"N": "113"},
+        "Name": {"S": "Marty McFly"},
+        "Email": {"S": "marty@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "1"}
+    },
+    {
+        "Id": {"N": "114"},
+        "Name": {"S": "Nancy Drew"},
+        "Email": {"S": "nancy@example.com"},
+        "SSO": {"N": "1"},
+        "2FA": {"N": "0"}
+    },
+    {
+        "Id": {"N": "115"},
+        "Name": {"S": "Oscar Wilde"},
+        "Email": {"S": "oscar@example.com"},
+        "SSO": {"N": "0"},
+        "2FA": {"N": "1"}
+    }
+]
