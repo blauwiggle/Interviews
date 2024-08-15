@@ -1,68 +1,80 @@
-data "aws_iam_policy_document" "assume_role" {
-  statement {
-    effect = "Allow"
-
-    principals {
-      type        = "Service"
-      identifiers = ["lambda.amazonaws.com"]
-    }
-
-    actions = ["sts:AssumeRole"]
-  }
-}
-
-resource "aws_iam_role" "iam_for_lambda" {
-  name               = "iam_for_lambda"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
-}
+# ----------------
+# ZIP
+# ----------------
 
 data "archive_file" "lambda" {
   type        = "zip"
   source_file = "lambda.py"
-  output_path = "lambda_function_payload.zip"
+  output_path = "lambda_payload.zip"
 }
+
+# ----------------
+# Lambda
+# ----------------
 
 resource "aws_lambda_function" "test_lambda" {
-  # If the file is not in the current working directory you will need to include a
-  # path.module in the filename.
-  filename      = "lambda_function_payload.zip"
-  function_name = "lambda_function_name"
-  role          = aws_iam_role.iam_for_lambda.arn
-  handler       = "test"
-
+  filename         = data.archive_file.lambda.output_path
+  function_name    = var.lambda_function_name
+  role             = aws_iam_role.iam_for_lambda.arn
+  handler          = "lambda.lambda_handler"
+  runtime          = "python3.9"
   source_code_hash = data.archive_file.lambda.output_base64sha256
 
-  runtime = "nodejs"
+  environment {
+    variables = {
+      TABLE_NAME = aws_dynamodb_table.users.name
+    }
+  }
+
+  logging_config {
+    log_format = "Text"
+  }
+
+  depends_on = [
+    aws_iam_role_policy_attachment.lambda_logs,
+    aws_cloudwatch_log_group.cloudwatch_log_group,
+  ]
 }
 
+# ----------------
+# DynamoDB
+# ----------------
+
 resource "aws_dynamodb_table" "users" {
-  name             = "users"
-  hash_key         = "TestTableHashKey"
-  billing_mode     = "PAY_PER_REQUEST"
-  stream_enabled   = true
-  stream_view_type = "NEW_AND_OLD_IMAGES"
+  name         = "users"
+  hash_key     = "Id"
+  billing_mode = "PAY_PER_REQUEST"
 
   attribute {
-    name = "TestTableHashKey"
-    type = "S"
+    name = "Id"
+    type = "N"
+  }
+
+  attribute {
+    name = "SSO"
+    type = "N"
+  }
+
+  attribute {
+    name = "2FA"
+    type = "N"
+  }
+
+  global_secondary_index {
+    name            = "SSO-2FA-index"
+    hash_key        = "SSO"
+    range_key       = "2FA"
+    projection_type = "ALL"
   }
 }
 
-resource "aws_iam_policy" "dynamodb_policy" {
-  name = "DynamoDBLambdaPolicy"
+# ----------------
+# Populate
+# ----------------
 
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Action = [
-          "dynamodb:*"
-        ]
-        Resource = [
-          "*"
-        ]
-      }
-    ]
-  })
+resource "aws_dynamodb_table_item" "users" {
+  for_each   = { for item in local.dynamodb_items : item.Id.N => item }
+  table_name = aws_dynamodb_table.users.name
+  hash_key   = "Id"
+  item       = jsonencode(each.value)
 }
