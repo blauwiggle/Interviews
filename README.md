@@ -151,10 +151,6 @@ Due to limitations in LocalStack, the CloudWatch metrics and alarms are not full
 **List Metrics:**
 
 ```bash
-
-```hcl
-
-```bash
 ❯ awslocal cloudwatch list-metrics
 
 {
